@@ -10,6 +10,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import br.com.up.karttime.databinding.ActivityMapsBinding
+import br.com.up.karttime.model.Race
+import br.com.up.karttime.repository.RaceRepository
+import com.google.firebase.Timestamp
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -26,6 +29,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        RaceRepository.instance().save(
+            Race(Timestamp.now(),
+            72,
+            20,
+            1.30)
+
+        )
+
     }
 
     /**

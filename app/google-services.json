@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "799765406383",
+    "project_id": "fir-kart-time",
+    "storage_bucket": "fir-kart-time.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799765406383:android:f48cc190fa9a523df1aa5a",
+        "android_client_info": {
+          "package_name": "br.com.up.karttime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799765406383-s7ovmeikklcorduafj620tfekdjl1n5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWw2ZU9dhJ-HPs1fasep2Pstr6t8G498Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799765406383-s7ovmeikklcorduafj620tfekdjl1n5f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
