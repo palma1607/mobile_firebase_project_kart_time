@@ -30,14 +30,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        RaceRepository.instance().save(
-            Race(Timestamp.now(),
-            72,
-            20,
-            1.30)
-
-        )
-
+        RaceRepository.instance().get()
     }
 
     /**
