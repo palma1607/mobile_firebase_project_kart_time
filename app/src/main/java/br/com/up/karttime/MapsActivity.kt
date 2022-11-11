@@ -1,7 +1,11 @@
 package br.com.up.karttime
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Looper
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -12,6 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import br.com.up.karttime.databinding.ActivityMapsBinding
 import br.com.up.karttime.model.Race
 import br.com.up.karttime.repository.RaceRepository
+import com.google.android.gms.location.*
 import com.google.firebase.Timestamp
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -31,6 +36,74 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         RaceRepository.instance().get()
+
+        if(checkSelfPermission(
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED){
+
+            getUserLocation()
+
+        }else{
+            requestPermissions(
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1000
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if(requestCode == 1000 &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                getUserLocation()
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+
+    @SuppressLint("NewApi", "MissingPermission")
+    fun getUserLocation(){
+
+        val locationRequest  =
+            LocationRequest.Builder(5000).build()
+
+        val locationCallback = object  : LocationCallback(){
+
+            override fun onLocationResult(p0: LocationResult) {
+                super.onLocationResult(p0)
+
+
+                if(locationRequest != null){
+
+                    val sydney = LatLng(p0.locations[0].latitude,
+
+                        p0.locations[0].longitude)
+                    mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+                }
+
+            }
+        }
+
+        val fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(this)
+
+         fusedLocationProviderClient
+             .requestLocationUpdates(
+                 locationRequest,
+                 locationCallback,
+                 Looper.getMainLooper())
+
+
+
+
+
     }
 
     /**

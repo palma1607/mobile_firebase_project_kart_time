@@ -1,7 +1,6 @@
 package br.com.up.karttime.repository
 
 import br.com.up.karttime.model.Race
-import com.google.firebase.FirebaseApp
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -43,7 +42,6 @@ class RaceRepository private constructor(){
             .document(id)
 
         document.update("numberLaps",race.numberLaps)
-        //...
     }
 
     fun get(){
@@ -56,17 +54,16 @@ class RaceRepository private constructor(){
                 for(document in documents){
 
                     val numberLaps =
-                        document.data["numberLaps"] as Int
+                        document.data["numberLaps"] as Long
                     val numberPilots =
-                        document.data["numberPilots"] as Int
+                        document.data["numberPilots"] as Long
                     val totalTime =
                         document.data["totalTime"] as Double
                     val date = document.data["date"]
                             as Timestamp
 
-                    Race(date,numberLaps,numberPilots,totalTime)
+                    Race(date,numberLaps.toInt(),numberPilots.toInt(),totalTime)
                 }
-
             }
     }
 }
